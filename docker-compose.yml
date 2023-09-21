@@ -1,0 +1,32 @@
+﻿services:
+  sag_db:
+    image: mysql:8.0.33
+    container_name: sag_db
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=sagdb
+      - MYSQL_ROOT_PASSWORD=123456789
+    ports:
+      - '3306:3306'
+    volumes:
+      - sagdbvolume:/var/lib/mysql
+  
+  sag_api:
+    build:
+      context: .
+      dockerfile: sag.api/Dockerfile
+    container_name: sag_api
+    restart: on-failure
+    environment:
+      - ConnectionStrings__sagDbConnection=Server=sag_db;Database=sagdb;Uid=root;Pwd=123456789;
+    depends_on:
+      - sag_db
+    ports:
+      - '8000:80'
+      - '8001:443'
+
+volumes:
+  sagdbvolume:
+    driver: local
