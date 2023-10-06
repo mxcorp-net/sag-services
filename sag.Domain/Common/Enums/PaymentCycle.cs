@@ -1,6 +1,6 @@
 ﻿namespace sag.Domain.Common.Enums;
 
-public enum PaymentCycle
+public enum PaymentCycle: short
 {
     Diary = 1,
     Weekly = 2,

@@ -1,9 +1,9 @@
 ﻿namespace sag.Domain.Common.Enums;
 
-public enum BankAccountType
+public enum AccountType: short
 {
     Debit = 1,
     Credit = 2,
     Investment = 3,
-    DepartmentStore = 4,
+    Loan = 4
 }

@@ -1,9 +1,7 @@
 ﻿namespace sag.Domain.Common.Enums;
 
-public enum TransactionType
+public enum TransactionType: short
 {
-    Sent = 1,
-    Deposit = 2,
-    Spent = 3,
-    
+    Inbound = 1,
+    Outbound = -1
 }

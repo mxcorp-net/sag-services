@@ -1,12 +1,13 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics;
 using sag.Application.Extensions;
 using sag.Infrastructure.Extensions;
 using sag.Persistence.Extensions;
-using FluentValidation;
+using sag.api.Middlewares;
 using sag.Application.Common.Structs;
-using sag.Application.Features.Auth.Validators;
+using sag.Application.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,10 +16,9 @@ builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddPersistenceLayer(builder.Configuration);
 builder.Services.AddApplicationLayer();
 
-// Add Validator Struct to MediatR
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(LoginUserValidator));
-
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -37,17 +37,14 @@ app.UseExceptionHandler(applicationBuilder =>
 
         context.Response.StatusCode = exceptionHandlerPathFeature?.Error switch
         {
-            BadHttpRequestException => StatusCodes.Status400BadRequest,
+            BadRequestException => StatusCodes.Status400BadRequest,
+            UnauthorizedException => StatusCodes.Status401Unauthorized,
             _ => StatusCodes.Status500InternalServerError
         };
 
-        var response = Response<object>.Fail(new ErrorResponse
-        {
-            Message = exceptionHandlerPathFeature?.Error.Message,
-            Exception = app.Environment.IsDevelopment()
-                ? exceptionHandlerPathFeature?.Error
-                : null
-        });
+        var response = Response<object>.Fail(app.Environment.IsDevelopment()
+            ? exceptionHandlerPathFeature?.Error
+            : new Exception(exceptionHandlerPathFeature?.Error.Message));
 
         await context.Response.WriteAsync(JsonSerializer.Serialize(response), Encoding.UTF8);
     });
@@ -62,7 +59,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
+app.UseMiddleware<AuthGuardMiddleware>();
 
 app.MapControllers();
 

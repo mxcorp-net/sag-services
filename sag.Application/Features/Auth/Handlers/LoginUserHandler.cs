@@ -2,11 +2,11 @@
 using System.Security.Claims;
 using System.Text;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using sag.Application.Common.Structs;
+using sag.Application.Exceptions;
 using sag.Application.Features.Auth.Queries;
 using sag.Persistence.Contexts;
 
@@ -29,7 +29,7 @@ public class LoginUserHandler : IRequestHandler<LoginUserQuery, Response<object>
             u.Email == request.LoginData.Email, cancellationToken: cancellationToken);
 
         if (user is null || !BCrypt.Net.BCrypt.Verify(request.LoginData.Password, user.Password))
-            throw new BadHttpRequestException("Email or Password are invalid!");
+            throw new BadRequestException("Email or Password are invalid!");
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(_config["AppSettings:Secret"] ?? Guid.NewGuid().ToString());
@@ -39,6 +39,7 @@ public class LoginUserHandler : IRequestHandler<LoginUserQuery, Response<object>
             {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.Name),
+                new Claim("id", user.Id.ToString()),
                 new Claim("permissions", "Hola Mundo!"),
             }),
             Expires = DateTime.UtcNow.AddHours(1),

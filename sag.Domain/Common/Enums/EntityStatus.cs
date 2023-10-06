@@ -1,8 +1,8 @@
 ﻿namespace sag.Domain.Common.Enums;
 
-public enum EntityStatus
+public enum EntityStatus: short
 {
     Archive = -1,
     Disable = 0,
-    Enable = 1,
+    Enable = 1
 }

@@ -12,45 +12,27 @@ public struct Response<T>
     {
         Message = message;
         Data = data;
-        Error = new ErrorResponse
-        {
-            Message = error?.Message,
-            Exception = error
-        };
+        Error = error is null
+            ? null
+            : new ErrorResponse
+            {
+                Message = error?.Message,
+                Exception = error
+            };
     }
 
-    private Response(Exception error)
-    {
+    private Response(Exception error) =>
         Error = new ErrorResponse
         {
             Message = error.Message,
             Exception = error
         };
-    }
 
-    public static Response<T> Success(T data)
-    {
-        return new Response<T>(data, null, null);
-    }
+    public static Response<T> Success(T data) => new(data, null, null);
 
-    public static Response<T> Success(T data, string? message)
-    {
-        return new Response<T>(data, message, null);
-    }
+    public static Response<T> Success(T data, string? message) => new(data, message, null);
 
-    public static Response<T> Fail(T data)
-    {
-        return new Response<T>(data, null, null);
-    }
+    public static Response<T> Fail(T data) => new(data, null, null);
 
-    public static Response<T?> Fail(Exception error)
-    {
-        return new Response<T?>(default, null, error);
-    }
-}
-
-public struct ErrorResponse
-{
-    public string? Message { get; set; }
-    public Exception? Exception { get; set; }
+    public static Response<T?> Fail(Exception? error) => new(default, null, error);
 }

@@ -4,11 +4,11 @@ using sag.Domain.Common;
 
 namespace sag.Domain.Entities;
 
-public class BankAccountDetail : BaseAuditableEntity
+public class UserAccountDetail : BaseAuditableEntity
 {
-    public Guid BankAccountId { get; set; }
+    [Required] public Guid UserAccountId { get; set; }
     [Required] public string DetailName { get; set; }
     [Required] public string DetailValue { get; set; }
-
-    [ForeignKey("Id")] public BankAccount BankAccount { get; set; }
+    
+    [ForeignKey("Id")] public UserAccount UserAccount { get; set; }
 }

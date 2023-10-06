@@ -8,8 +8,8 @@ namespace sag.Domain.Entities;
 public class Transaction : BaseAuditableEntity
 {
     [Required] public TransactionType Type { get; set; }
-    [Required] public Guid BackAccountId { get; set; }
+    [Required] public Guid UserAccountId { get; set; }
     [Required] public decimal Amount { get; set; }
 
-    [ForeignKey("Id")] public BankAccount BankAccount { get; set; }
+    [ForeignKey("Id")] public UserAccount UserAccount { get; set; }
 }

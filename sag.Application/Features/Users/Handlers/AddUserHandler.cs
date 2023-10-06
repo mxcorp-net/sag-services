@@ -22,9 +22,9 @@ public class AddUserHandler : IRequestHandler<AddUserCommand, User>
             Status = request.User.Status
         };
 
-        var newUser = _dbContext.Users?.Add(user);
+        var newUser = await _dbContext.Users.AddAsync(user, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-        Debug.Assert(newUser != null, nameof(newUser) + " != null");
+        
         return newUser.Entity;
     }
 }

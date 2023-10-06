@@ -1,13 +1,13 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using sag.api.Attributes;
 using sag.Application.Features.Users.Commands;
 using sag.Application.Features.Users.Queries;
 using sag.Domain.Entities;
 
 namespace sag.api.Controllers;
 
-[Authorize]
+[AuthGuard]
 [ApiController, Route("api/users")]
 public class UsersController : Controller
 {

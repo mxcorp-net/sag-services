@@ -20,5 +20,7 @@ public class AddUserValidator : AbstractValidator<AddUserCommand>
 
         RuleFor(r => r.User.Password)
             .NotNull().NotEmpty().WithMessage("Missing parameter: password");
+        
+        // TODO: validate Unique Email or Add to DB Index
     }
 }

@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\sag.Domain\sag.Domain.csproj" />
+      <ProjectReference Include="..\sag.Infrastructure\sag.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

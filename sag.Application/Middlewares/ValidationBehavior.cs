@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Http;
+using sag.Application.Exceptions;
 
 namespace sag.Application.Middlewares;
 
@@ -22,7 +22,7 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
         var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
 
         if (failures.Count != 0)
-            throw new BadHttpRequestException(failures[0].ErrorMessage);
+            throw new BadRequestException(failures[0].ErrorMessage);
         return await next();
     }
 }

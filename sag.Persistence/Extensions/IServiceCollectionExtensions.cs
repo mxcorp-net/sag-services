@@ -27,7 +27,7 @@ public static class IServiceCollectionExtensions
         services.AddDbContext<SagDbContext>(options =>
             options.UseMySql(connectionString, new MySqlServerVersion(dbVersion),
                 builder => builder.MigrationsAssembly("sag.api").EnableRetryOnFailure(
-                    maxRetryCount: 5,
+                    maxRetryCount: 3,
                     maxRetryDelay: TimeSpan.FromSeconds(30),
                     errorNumbersToAdd: null
                 ))

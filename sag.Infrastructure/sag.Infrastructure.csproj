@@ -16,7 +16,10 @@
 
     <ItemGroup>
       <Folder Include="Middlewares\" />
-      <Folder Include="Services\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\sag.Domain\sag.Domain.csproj" />
     </ItemGroup>
 
 </Project>

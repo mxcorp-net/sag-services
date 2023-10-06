@@ -1,22 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using sag.Domain.Entities;
+using sag.Infrastructure.Services;
 
 namespace sag.Persistence.Contexts;
 
 public class SagDbContext : DbContext
 {
-    public SagDbContext(DbContextOptions<SagDbContext> options) : base(options)
+    private readonly IAuthService _auth;
+
+    public SagDbContext(DbContextOptions<SagDbContext> options, IAuthService auth) : base(options)
     {
+        _auth = auth;
     }
 
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Institution> Institutions { get; set; }
     public virtual DbSet<Transaction> Transactions { get; set; }
     public virtual DbSet<TransactionDetail> TransactionDetails { get; set; }
-    public virtual DbSet<Loan> Loans { get; set; }
-    public virtual DbSet<InvestmentAccount> InvestmentAccounts { get; set; }
-    public virtual DbSet<Institution>? Institutions { get; set; }
-    public virtual DbSet<BankAccountDetail> BankAccountDetails { get; set; }
-    public virtual DbSet<BankAccount> BankAccounts { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserAccount> UserAccounts { get; set; }
+    public virtual DbSet<UserAccountDetail> UserAccountDetails { get; set; }
+
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
@@ -25,12 +28,16 @@ public class SagDbContext : DbContext
         foreach (var entry in ChangeTracker.Entries().Where(e => e.State is EntityState.Added))
         {
             entry.Property("CreatedAt").CurrentValue = dateTime;
-            // TODO: Implement property CreatedBy
+            entry.Property("CreatedBy").CurrentValue = _auth.User.Id;
+            
+            entry.Property("UpdatedAt").CurrentValue = dateTime;
+            entry.Property("UpdatedBy").CurrentValue = _auth.User.Id;
         }
+
         foreach (var entry in ChangeTracker.Entries().Where(e => e.State is EntityState.Modified))
         {
             entry.Property("UpdatedAt").CurrentValue = dateTime;
-            // TODO: Implement property UpdatedBy
+            entry.Property("UpdatedBy").CurrentValue = _auth.User.Id;
         }
 
 
