@@ -30,7 +30,7 @@ public class InMemorySagDbContext
 
         context.Add(new Institution { Name = "Banamex", Type = InstitutionType.Banking, Status = EntityStatus.Enable });
         context.Add(new Institution { Name = "BBVA", Type = InstitutionType.Banking, Status = EntityStatus.Enable });
-        context.Add(new Institution { Name = "GBM", Type = InstitutionType.Investment, Status = EntityStatus.Enable });
+        context.Add(new Institution { Name = "GBM", Type = InstitutionType.Financial, Status = EntityStatus.Enable });
 
         #endregion
 

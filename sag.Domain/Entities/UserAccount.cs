@@ -13,6 +13,6 @@ public class UserAccount : BaseAuditableEntity
     [Required] public AccountType AccountType { get; set; }
     [Required] public EntityStatus Status { get; set; } = EntityStatus.Enable;
     
-    [ForeignKey("Id")] public User User { get; set; }
-    [ForeignKey("Id")] public Institution Institution { get; set; }
+    [ForeignKey("UserId")] public User User { get; set; }
+    [ForeignKey("InstitutionId")] public Institution Institution { get; set; }
 }

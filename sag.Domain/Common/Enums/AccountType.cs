@@ -2,8 +2,10 @@
 
 public enum AccountType: short
 {
+    Cash = 0,
     Debit = 1,
-    Credit = 2,
-    Investment = 3,
-    Loan = 4
+    Investment = 2,
+    Credit = 3,
+    Department = 4,
+    Loan = 5
 }

@@ -10,8 +10,6 @@
       <Folder Include="Common\Exceptions\" />
       <Folder Include="Common\Interfaces\" />
       <Folder Include="Features\Auth\Commands\" />
-      <Folder Include="Features\UserAccounts\Commands\" />
-      <Folder Include="Features\UserAccounts\Models\" />
     </ItemGroup>
 
     <ItemGroup>

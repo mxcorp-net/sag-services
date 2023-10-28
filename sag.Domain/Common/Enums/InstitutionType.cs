@@ -2,9 +2,9 @@
 
 public enum InstitutionType: short
 {
+    Personal = 0,
     Banking = 1,
     Financial = 2,
     Government = 3,
-    Investment = 4,
-    DepartmentStore = 5
+    DepartmentStore = 4
 }

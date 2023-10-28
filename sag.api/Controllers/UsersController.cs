@@ -15,10 +15,13 @@ public class UsersController : Controller
 
     public UsersController(IMediator mediator) => _mediator = mediator;
 
-    // Get a all Users
+    /// <summary>
+    /// Get All Users
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> GetUsers() =>
-        Ok(await _mediator.Send(new GetUsersQuery()));
+        Ok(await _mediator.Send(new GetUsersQuery())); //TODO: Add Filters
 
     /// <summary>
     /// Add new User

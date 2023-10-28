@@ -10,5 +10,5 @@ public class UserAccountDetail : BaseAuditableEntity
     [Required] public string DetailName { get; set; }
     [Required] public string DetailValue { get; set; }
     
-    [ForeignKey("Id")] public UserAccount UserAccount { get; set; }
+    [ForeignKey("UserAccountId")] public UserAccount UserAccount { get; set; }
 }

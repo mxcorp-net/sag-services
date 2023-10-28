@@ -1,18 +1,19 @@
 ﻿using System.Diagnostics;
 using MediatR;
+using sag.Application.Common.Structs;
 using sag.Application.Features.Users.Commands;
 using sag.Domain.Entities;
 using sag.Persistence.Contexts;
 
 namespace sag.Application.Features.Users.Handlers;
 
-public class AddUserHandler : IRequestHandler<AddUserCommand, User>
+public class AddUserHandler : IRequestHandler<AddUserCommand, Response<User>>
 {
     private readonly SagDbContext _dbContext;
 
     public AddUserHandler(SagDbContext dbContext) => _dbContext = dbContext;
 
-    public async Task<User> Handle(AddUserCommand request, CancellationToken cancellationToken)
+    public async Task<Response<User>> Handle(AddUserCommand request, CancellationToken cancellationToken)
     {
         var user = new User
         {
@@ -25,6 +26,6 @@ public class AddUserHandler : IRequestHandler<AddUserCommand, User>
         var newUser = await _dbContext.Users.AddAsync(user, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
         
-        return newUser.Entity;
+        return Response<User>.Success(newUser.Entity);
     }
 }

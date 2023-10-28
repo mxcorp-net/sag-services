@@ -11,5 +11,5 @@ public class Transaction : BaseAuditableEntity
     [Required] public Guid UserAccountId { get; set; }
     [Required] public decimal Amount { get; set; }
 
-    [ForeignKey("Id")] public UserAccount UserAccount { get; set; }
+    [ForeignKey("UserAccountId")] public UserAccount UserAccount { get; set; }
 }

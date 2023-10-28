@@ -10,5 +10,5 @@ public class TransactionDetail : BaseAuditableEntity
     [Required] public string DetailName { get; set; }
     [Required] public string DetailValue { get; set; }
 
-    [ForeignKey("Id")] public Transaction Transaction { get; set; }
+    [ForeignKey("TransactionId")] public Transaction Transaction { get; set; }
 }

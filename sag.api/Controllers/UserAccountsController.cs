@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using sag.api.Attributes;
+using sag.Application.Features.UserAccounts.Commands;
+using sag.Application.Features.UserAccounts.Models;
 using sag.Application.Features.UserAccounts.Queries;
 using sag.Domain.Entities;
 
@@ -25,7 +27,9 @@ public class UserAccountsController : ControllerBase
 
     // POST: api/users/{userId}/accounts
     [HttpPost] //TODO: change userAccount parameter for a new object request type 
-    public void AddUserAccount([FromBody] UserAccount userAccount, Guid userId) => Ok();
+    public async Task<IActionResult> AddUserAccount([FromBody] UserAccountRequest request, Guid userId) => 
+        Ok(await _mediator.Send(new AddUserAccountCommand(request, userId)));
+     
 
     // PUT: api/Loans/5
     [HttpPut("{id:guid}")]
