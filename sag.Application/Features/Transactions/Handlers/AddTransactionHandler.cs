@@ -37,10 +37,12 @@ public class AddTransactionHandler : IRequestHandler<AddTransactionCommand, Resp
         {
             Type = request.TransactionRequest.Type,
             UserAccountId = request.UserAccountId,
-            Amount = request.TransactionRequest.Amount
+            Amount = request.TransactionRequest.Amount,
+            CreatedAt = request.TransactionRequest.CreatedAt
         };
         
         var newTrans = await _sagDbContext.Transactions.AddAsync(transaction, cancellationToken);
+        await AddTransactionDetails(newTrans.Entity.Id, request.TransactionRequest.Details, cancellationToken);
 
         if (request.TransactionRequest.Details.ContainsKey(TransactionKey.DestinationAccountId))
         {
@@ -70,7 +72,8 @@ public class AddTransactionHandler : IRequestHandler<AddTransactionCommand, Resp
         {
             Type = request.TransactionRequest.Type,
             UserAccountId = request.UserAccountId,
-            Amount = request.TransactionRequest.Amount
+            Amount = request.TransactionRequest.Amount,
+            CreatedAt = request.TransactionRequest.CreatedAt
         };
         
         var newTrans = await _sagDbContext.Transactions.AddAsync(transaction, cancellationToken);
