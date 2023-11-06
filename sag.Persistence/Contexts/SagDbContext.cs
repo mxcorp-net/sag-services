@@ -17,6 +17,7 @@ public class SagDbContext : DbContext
     public virtual DbSet<Transaction> Transactions { get; set; }
     public virtual DbSet<TransactionDetail> TransactionDetails { get; set; }
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserDevice> UserDevices { get; set; }
     public virtual DbSet<UserAccount> UserAccounts { get; set; }
     public virtual DbSet<UserAccountDetail> UserAccountDetails { get; set; }
 
@@ -40,7 +41,17 @@ public class SagDbContext : DbContext
             entry.Property("UpdatedBy").CurrentValue = _auth.User.Id;
         }
 
-
         return base.SaveChangesAsync(cancellationToken);
     }
+
+    // protected override void OnModelCreating(ModelBuilder modelBuilder)
+    // {
+    //     modelBuilder.Entity<Transaction>()
+    //         .HasMany(t => t.Details)
+    //         .WithOne(d => d.Transaction)
+    //         .HasForeignKey(d => d.TransactionId)
+    //         .IsRequired(false);
+    //     
+    //     base.OnModelCreating(modelBuilder);
+    // }
 }

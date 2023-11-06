@@ -1,24 +1,30 @@
 ﻿using Microsoft.Extensions.Logging;
+using sag.app.Data;
 
-namespace sag.app;
-
-public static class MauiProgram
+namespace sag.app
 {
-    public static MauiApp CreateMauiApp()
+    public static class MauiProgram
     {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp<App>()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                });
+
+            builder.Services.AddMauiBlazorWebView();
 
 #if DEBUG
-        builder.Logging.AddDebug();
+		builder.Services.AddBlazorWebViewDeveloperTools();
+		builder.Logging.AddDebug();
 #endif
 
-        return builder.Build();
+            builder.Services.AddSingleton<WeatherForecastService>();
+
+            return builder.Build();
+        }
     }
 }

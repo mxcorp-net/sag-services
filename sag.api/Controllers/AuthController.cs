@@ -15,4 +15,10 @@ public class AuthController : Controller
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest login) =>
         Ok(await _mediator.Send(new LoginUserQuery(login)));
+
+    [HttpPost("check")]
+    public async Task<IActionResult> Check([FromBody] CheckRequest check) =>
+        Ok(await _mediator.Send(new CheckQuery(check)));
+
+    // TODO: Add Access by KnowDevice
 }

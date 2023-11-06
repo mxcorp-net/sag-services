@@ -24,7 +24,7 @@ public class AddUserAccountHandler : IRequestHandler<AddUserAccountCommand, Resp
             Status = EntityStatus.Enable
         };
 
-        var newUserAccount = await _dbContext.UserAccounts.AddAsync(userAccount, cancellationToken);
+        var newUserAccount = _dbContext.UserAccounts.Add(userAccount);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return Response<UserAccount>.Success(newUserAccount.Entity);

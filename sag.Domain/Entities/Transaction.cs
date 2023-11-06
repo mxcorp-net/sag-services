@@ -12,4 +12,5 @@ public class Transaction : BaseAuditableEntity
     [Required] public decimal Amount { get; set; }
 
     [ForeignKey("UserAccountId")] public UserAccount UserAccount { get; set; }
+    public ICollection<TransactionDetail> Details { get; } = new List<TransactionDetail>();
 }

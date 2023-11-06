@@ -8,8 +8,8 @@ WORKDIR /src
 COPY ["sag.api/sag.api.csproj", "sag.api/"]
 COPY ["sag.Application/sag.Application.csproj", "sag.Application/"]
 COPY ["sag.Domain/sag.Domain.csproj", "sag.Domain/"]
-COPY ["sag.Persistence/sag.Persistence.csproj", "sag.Persistence/"]
 COPY ["sag.Infrastructure/sag.Infrastructure.csproj", "sag.Infrastructure/"]
+COPY ["sag.Persistence/sag.Persistence.csproj", "sag.Persistence/"]
 RUN dotnet restore "sag.api/sag.api.csproj"
 COPY . .
 WORKDIR "/src/sag.api"

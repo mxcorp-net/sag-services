@@ -1,11 +1,12 @@
-﻿namespace sag.app;
-
-public partial class App : Application
+﻿namespace sag.app
 {
-    public App()
+    public partial class App : Application
     {
-        InitializeComponent();
+        public App()
+        {
+            InitializeComponent();
 
-        MainPage = new AppShell();
+            MainPage = new MainPage();
+        }
     }
 }

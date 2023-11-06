@@ -1,8 +1,9 @@
-﻿using sag.Domain.Common.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using sag.Domain.Common.Interfaces;
 
 namespace sag.Domain.Common;
 
 public abstract class BaseEntity: IEntity
 {
-    public Guid Id { get; set; }
+    [Key] public Guid Id { get; set; }
 }
